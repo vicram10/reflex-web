@@ -3,7 +3,8 @@ import pynecone as pc
 from pcweb.base_state import State
 from pcweb.templates.docpage import docdemo, doctext
 
-code36 = """pc.vstack(
+
+code_alert = """pc.vstack(
     pc.alert(
         pc.alert_icon(),
         pc.alert_title("Error Pynecone version is out of date."),
@@ -27,7 +28,7 @@ code36 = """pc.vstack(
     width="100%",
 )
 """
-code37 = """pc.vstack(
+code_alert2 = """pc.vstack(
     pc.alert(
         pc.alert_icon(),
         pc.alert_title("Pynecone version is up to date."),
@@ -58,45 +59,82 @@ def render_alert():
         doctext(
             "Alerts are used to communicate a state that affects a system, feature or page. An example of the different alert statuses is shown below."
         ),
-        docdemo(code36),
+        docdemo(code_alert),
         doctext(
             "Along with different status types, alerts can also have different style variants and an optional description. By default the variant is 'subtle'."
         ),
-        docdemo(code37),
+        docdemo(code_alert2),
         align_items="start",
     )
 
 
-code38 = """pc.hstack(
+code_circular_progress = """pc.hstack(
     pc.circular_progress(value=0),
-    pc.circular_progress(value=25),
-    pc.circular_progress(pc.circular_progress_label(50), value=50),
-    pc.circular_progress(value=75),
-    pc.circular_progress(value=100),
+    pc.circular_progress(value=CirProgState.count, label= CirProgState.count),
     pc.circular_progress(is_indeterminate=True),
+    pc.button("Go", on_click=CirProgState.go)
 )
 """
+
+code_circular_progress_state = """import asyncio
+
+class CirProgState(State):
+    count: int = 0
+
+    async def go(self):
+        self.count = 0
+        yield
+        for _ in range(100):
+            await asyncio.sleep(0.05)
+            self.count += 1
+            yield
+"""
+exec(code_circular_progress_state)
 
 
 def render_circularprogress():
     return pc.vstack(
         doctext(
-            "The CircularProgress component is used to indicate the progress for determinate and indeterminate processes. Determinate progress: fills the circular track with color, as the indicator moves from 0 to 360 degrees. Indeterminate progress: grows and shrinks the indicator while moving along the circular track."
+            "The CircularProgress component is used to indicate the",
+            " progress for determinate and indeterminate processes.",
         ),
-        docdemo(code38),
+        doctext(
+            "Determinate progress: fills the circular track with color, as the indicator moves from 0 to 360 degrees."
+        ),
+        doctext("Indeterminate progress: grows and shrinks the indicator while moving along the circular track."),
+        docdemo(
+            code_circular_progress,
+            state=code_circular_progress_state,
+            comp=eval(code_circular_progress),
+            context=True,
+        ),
         align_items="start",
     )
 
 
-code39 = """pc.vstack(
+code_progress = """pc.vstack(
     pc.progress(value=0, width="100%"),
-    pc.progress(value=50, width="100%"),
-    pc.progress(value=75, width="100%"),
-    pc.progress(value=100, width="100%"),
+    pc.progress(value=ProgState.count, width="100%"),
     pc.progress(is_indeterminate=True, width="100%"),
+    pc.button("Go", on_click=ProgState.go),
     spacing="1em",
     min_width=["10em", "20em"],
 )"""
+
+code_progress_state = """import asyncio
+
+class ProgState(State):
+    count: int = 0
+
+    async def go(self):
+        self.count = 0
+        yield
+        for _ in range(100):
+            await asyncio.sleep(0.05)
+            self.count += 1
+            yield
+"""
+exec(code_progress_state)
 
 
 def render_progress():
@@ -104,56 +142,63 @@ def render_progress():
         doctext(
             "Progress is used to display the progress status for a task that takes a long time or consists of several steps."
         ),
-        docdemo(code39),
+        docdemo(
+            code_progress,
+            state=code_progress_state,
+            comp=eval(code_progress),
+            context=True,
+        ),
         align_items="start",
     )
 
 
-code40 = """pc.stack(
+code_skeleton = """pc.stack(
     pc.skeleton(height="10px", speed=1.5),
     pc.skeleton(height="15px", speed=1.5),
     pc.skeleton(height="20px", speed=1.5),
     width="50%",
 )
 """
-code41 = """pc.stack(
+code_skeleton_circle = """pc.stack(
     pc.skeleton_circle(size="30px"),
     pc.skeleton_text(no_of_lines=8),
     width="50%",
 )
 """
-code42 = """pc.stack(
+code_skeleton_text = """pc.stack(
     pc.skeleton_text(
         no_of_lines=5, start_color="pink.500", end_color="orange.500"
     ),
     width="50%",
 )
 """
-code43 = """pc.vstack(
-    pc.skeleton(pc.text("Text is already loaded."), is_loaded=True),
-    pc.skeleton(pc.text("Text is already loaded."), is_loaded=False),
+code_skeleton_load = """pc.vstack(
+    pc.skeleton(pc.text("Text is already loaded."), is_loaded=SkeletonLoadState.show),
+    pc.switch(on_change=SkeletonLoadState.set_show),
 )
 """
+code_skeleton_load_state = """class SkeletonLoadState(State):
+    show: bool = True
+"""
+exec(code_skeleton_load_state)
 
 
 def render_skeleton():
     return pc.vstack(
         doctext("Skeleton is used to display the loading state of some components."),
-        docdemo(code40),
-        doctext(
-            "Along with the basic skeleton box there are also a skeleton circle and text for ease of use."
-        ),
-        docdemo(code41),
+        docdemo(code_skeleton),
+        doctext("Along with the basic skeleton box there are also a skeleton circle and text for ease of use."),
+        docdemo(code_skeleton_circle),
         doctext(
             "Another feature of skeleton is the ability to animate colors. We provide the args start_color and end_color to animate the color of the skeleton component(s)."
         ),
-        docdemo(code42),
+        docdemo(code_skeleton_text),
         doctext(
             "You can prevent the skeleton from loading by using the ",
             pc.code("is_loaded"),
             " prop.",
         ),
-        docdemo(code43),
+        docdemo(code_skeleton_load, state=code_skeleton_load_state, comp=eval(code_skeleton_load), context=True),
         align_items="start",
     )
 
@@ -185,9 +230,7 @@ def render_spinner():
             "Spinners provide a visual cue that an event is either processing, awaiting a course of change or a result."
         ),
         docdemo(code44),
-        doctext(
-            "Along with the color you can style further with props such as speed, empty color, and thickness."
-        ),
+        doctext("Along with the color you can style further with props such as speed, empty color, and thickness."),
         docdemo(code45),
         align_items="start",
     )

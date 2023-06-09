@@ -6,7 +6,7 @@ import pynecone as pc
 
 from pcweb.templates.docpage import docpage
 from .source import Source, generate_docs
-
+import tqdm
 
 modules = [
     pc.App,
@@ -23,10 +23,9 @@ modules = [
     pc.Var,
 ]
 
-for module in modules:
+for module in tqdm.tqdm(modules, desc="Loading modules for API Reference"):
     s = Source(module=module)
     name = module.__name__.lower()
     docs = generate_docs(name, s)
-    print("module", name)
     title = f"{name.replace('_', ' ').title()} | Pynecone"
     locals()[name] = docpage(f"/docs/api-reference/{name}", title)(docs)
