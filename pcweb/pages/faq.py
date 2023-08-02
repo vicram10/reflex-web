@@ -22,7 +22,7 @@ faq_items = [
             rx.text(
                 "Check out our ",
                 rx.span(doclink("gallery", href="/docs/gallery")),
-                " to see what ur community has already built with Reflex.",
+                " to see what our community has already built with Reflex.",
             ),
             align_items="flex-start",
             width="100%",
