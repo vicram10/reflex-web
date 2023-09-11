@@ -19,13 +19,13 @@ code1 = """rx.text(
 
 code2 = """@font-face {
     font-family: MyFont;
-    src: url("MyFont.otf") format("opentype");
+    src: url("/MyFont.otf") format("opentype");
 }
 
 @font-face {
     font-family: MyFont;
     font-weight: bold;
-    src: url("MyFont.otf") format("opentype");
+    src: url("/MyFont.otf") format("opentype");
 }
 """
 
@@ -60,7 +60,7 @@ def custom_stylesheets():
         doccode(
             """app = rx.App(
     stylesheets=[
-        "styles.css",  # This path is relative to assets/
+        "/styles.css",  # This path is relative to assets/
     ],
 )"""
         ),
@@ -102,7 +102,7 @@ def custom_stylesheets():
         doccode(
             """app = rx.App(
             stylesheets=[
-                "fonts/myfont.css",  # This path is relative to assets/
+                "/fonts/myfont.css",  # This path is relative to assets/
             ],
         )"""
         ),
