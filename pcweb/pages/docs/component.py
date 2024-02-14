@@ -253,11 +253,11 @@ def prop_docs(prop: Prop, prop_dict, component) -> list[rx.Component]:
             padding_left="1em",
             justify="start"
         ),
-        rx.table.cell(
-            render_select(prop),
-            padding_left="1em",
-            justify="start"
-        ),
+        # rx.table.cell(
+        #     render_select(prop),
+        #     padding_left="1em",
+        #     justify="start"
+        # ),
     ]
 
 
@@ -509,7 +509,7 @@ def generate_props(src, component, comp):
         comp = rx.fragment()
 
     return rx.vstack(
-        docdemobox(comp) if not isinstance(comp, Fragment)  else "",
+        # docdemobox(comp) if not isinstance(comp, Fragment)  else "",
         rx.scroll_area(
             rx.table.root(
                 rx.table.header(
@@ -517,7 +517,7 @@ def generate_props(src, component, comp):
                         rx.table.column_header_cell("Prop", padding_left=padding_left, justify="start"),
                         rx.table.column_header_cell("Type", padding_left=padding_left, justify="start"),
                         rx.table.column_header_cell("Description", padding_left=padding_left, justify="start", width="40%"),
-                        rx.table.column_header_cell("Values", padding_left=padding_left, justify="start"),
+                        # rx.table.column_header_cell("Values", padding_left=padding_left, justify="start"),
                     )
                 ),
                 body,
