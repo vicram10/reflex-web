@@ -76,6 +76,7 @@ def component_grid():
                     background_size="cover",
                     background_position="center",
                     background_repeat="no-repeat",
+                    border_radius="12px",
                     w="100%",
                 ),
                 rx.chakra.box(
@@ -83,20 +84,17 @@ def component_grid():
                         meta["title"],
                         font_size="1.2rem",
                         mb="0.5em",
-                        color=tc["docs"]["body"]
+                        color="#D6D6ED"
                     ),
                     rx.chakra.text(
                         meta["description"],
                         font_size="0.8rem",
-                        color=tc["docs"]["body"]
+                        color="#8E8EA8"
 
                     ),
-                    rx.chakra.divider(),
-                    rx.spacer(),
+                    rx.divider(color="#6C6C81", margin_y="1em"),
                     rx.chakra.hstack(
-                        rx.chakra.vstack(
-                            rx.chakra.text("Written by", font_size="0.6rem"),
-                            rx.chakra.hstack(
+                        rx.chakra.hstack(
                                 rx.chakra.avatar(
                                     name=meta["author"],
                                     size="sm",
@@ -104,57 +102,67 @@ def component_grid():
                                     color="#DACEEE",
                                 ),
                                 rx.chakra.text(meta["author"], font_size="0.8rem"),
-                            ),
-                            align_items="left",
                         ),
                         rx.spacer(),
-                        rx.chakra.vstack(
-                            rx.chakra.text("Published on", font_size="0.6rem"),
-                            rx.chakra.text(str(meta["date"]), font_size="0.8em"),
-                            align_items="left",
-                        ),
-                        color=tc["docs"]["body"],
+                        rx.chakra.text(str(meta["date"]), font_size="0.8em"),
+                        color="#8E8EA8",
                         padding_bottom="0.5em",
                         width="100%",
                     ),
-                    p=4,
                     height="100%",
                     width="100%",
+                    padding_top="1em"
                 ),
-                border="1px solid #eee",
-                border_radius="8px",
                 overflow="hidden",
-                bg_color="white",
-                _hover={
-                    "box_shadow": "0px 0px 0px 1px rgba(52, 46, 92, 0.12), 0px 2px 3px rgba(3, 3, 11, 0.1), 0px 12px 8px rgba(3, 3, 11, 0.04), 0px 8px 12px -4px rgba(3, 3, 11, 0.02)"
-                },
                 href=path,
             ),
         )
     return rx.chakra.box(
         rx.chakra.responsive_grid(*posts, columns=[1, 2, 2, 2, 3], gap=4),
+        padding_top="4em"
     )
 
 
 @webpage(path="/blog", title="Blog")
 def blg():
     return rx.chakra.container(
-        rx.chakra.vstack(
-            rx.chakra.vstack(
-                rx.chakra.text("Reflex Blog", font_size=styles.H1_FONT_SIZE),
-                rx.chakra.text(
-                    "The latest news from the Reflex team. ",
-                    color=tc["docs"]["body"],
+        rx.vstack(
+            rx.vstack(
+                rx.flex(
+                    rx.chakra.text(
+                        "Blog posts", 
+                        background_image="linear-gradient(95deg, #B1A9FB 25.71%, #867BF1 83.81%);",
+                        text_align="center",
+                        background_clip="text",
+                        padding_x="1em"
+                    ),
+                    border_radius= "15px;",
+                    border= "1px solid #4435D4;",
+                    background= "linear-gradient(180deg, rgba(97, 81, 243, 0.20) 0%, rgba(86, 70, 237, 0.20) 100%);",
+                    box_shadow= "0px 3px 6px -3px rgba(34, 25, 121, 0.60), 0px 0px 4px -1px rgba(27, 21, 90, 0.40);"
                 ),
-                rx.divider(size="4"),
-                align_items="left",
+                rx.chakra.text(
+                    "Reflex Blog Latest News and Updates", 
+                    font_size="64px;",
+                    background_image="linear-gradient(95deg, #D6D6ED 42.14%, #727280 63.21%);",
+                    text_align="center",
+                    width="650px",
+                    background_clip="text",
+                    font_weight="bold",
+                    letter_spacing= "-1.28px;",
+                ),
+                rx.text(
+                    "Stay current with all the relevant details for Reflex",
+                    color="#6C6C81",
+                ),
+                align_items="center",
                 text_align="left",
                 width="100%",
-                spacing="4",
+                spacing="1",
             ),
             component_grid(),
             max_width="110em",
-            align_items="stretch",
+            align_items="center",
             min_height="80vh",
             margin_bottom="4em",
             padding_top="95px",

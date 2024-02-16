@@ -53,6 +53,7 @@ def webpage(path: str, title: str = DEFAULT_TITLE, props=None) -> Callable:
                 contents(*children, **props),
                 footer(),
                 font_family=styles.SANS,
+                background="#131217",
                 **props,
             )
 

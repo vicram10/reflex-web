@@ -152,8 +152,8 @@ def get_component(doc: str, title: str):
     ))
 
 
-doc_routes = [gallery, library, resources] + apiref_pages
-
+# doc_routes = [gallery, library, resources] + apiref_pages
+doc_routes = []
 
 
 for doc in sorted(flexdown_docs):
@@ -177,6 +177,8 @@ for doc in sorted(flexdown_docs):
                 doc_routes.append(c)
         else:
              doc_routes.append(comp)
+
+doc_routes = []
 
 for name, ns in docs_ns.__dict__.items():
     locals()[name] = ns
